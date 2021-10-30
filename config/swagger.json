@@ -1,0 +1,148 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "A simple RESTful API for meteors",
+        "version": "1.0.0",
+        "title": "Meteors"
+    },
+    "basePath": "/v1",
+    "tags": [
+        {
+            "name": "meteor",
+            "description": "Everything about a meteor"
+        }
+    ],
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/meteor/{id}": {
+            "get": {
+                "tags": [
+                    "meteor"
+                ],
+                "summary": "Get a meteor by Id",
+                "description": "",
+                "operationId": "getMeteor",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "The meteor with the given ID",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/Meteor"
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/ApiResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/meteors": {
+            "get": {
+                "tags": [
+                    "meteor"
+                ],
+                "summary": "Get all meteors",
+                "description": "",
+                "operationId": "getMeteors",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of meteors",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/Meteors"
+                            }
+                        }
+                    },
+                    "405": {
+                        "description": "Invalid input",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/ApiResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+      },
+
+
+    "definitions": {
+        "Meteor": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "Meteors": {
+            "type": "array",
+            "items": {
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/Meteor"
+                    },
+                    {
+                        "type": "object"
+                    }
+                ]
+            }
+        },
+
+        "ApiResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 400
+                },
+                "type": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
